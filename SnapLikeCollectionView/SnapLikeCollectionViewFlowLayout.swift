@@ -94,9 +94,13 @@ extension SnapLikeCollectionViewFlowLayout {
         let contentWidth: CGFloat = 2 * centerOffset + cellSize.centerWidth + CGFloat(numberOfItems - 1) * cellSize.normalWidth
         return CGSize(width: contentWidth, height: height)
     }
-    
-    override public func prepare() {
+
+    override public func invalidateLayout() {
+        super.invalidateLayout()
         cache.removeAll()
+    }
+
+    override public func prepare() {
         if cache.isEmpty || cache.count != numberOfItems {
             for item in 0..<numberOfItems {
                 let indexPath = IndexPath(item: item, section: 0)
