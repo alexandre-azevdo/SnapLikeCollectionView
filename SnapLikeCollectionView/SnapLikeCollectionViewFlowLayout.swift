@@ -101,6 +101,7 @@ extension SnapLikeCollectionViewFlowLayout {
     }
 
     override public func prepare() {
+        cache.removeAll()
         if cache.isEmpty || cache.count != numberOfItems {
             for item in 0..<numberOfItems {
                 let indexPath = IndexPath(item: item, section: 0)
