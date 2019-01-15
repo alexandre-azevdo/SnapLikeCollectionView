@@ -19,6 +19,9 @@ public class SnapLikeDataSource<Cell: UICollectionViewCell>: NSObject, UICollect
         case left
         case right
     }
+
+    private var enableAnimations: Bool = true
+
     private var scrollVelocity: CGFloat = 0.0
     private var selectedItem: Int = 0
     
@@ -38,7 +41,11 @@ public class SnapLikeDataSource<Cell: UICollectionViewCell>: NSObject, UICollect
     }
     
     // MARK: - Animation:
-    
+
+    func setAnimationsEnabled(to enabled: Bool) {
+        enableAnimations = enabled
+    }
+
     public func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         if self.selectedItem == Int.max { return }
         
@@ -124,7 +131,7 @@ public class SnapLikeDataSource<Cell: UICollectionViewCell>: NSObject, UICollect
     // MARK : - Delegate
     
     @objc public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        collectionView.deselectItem(at: indexPath, animated: false)
+        collectionView.deselectItem(at: indexPath, animated: enableAnimations)
         
         scrollViewWillBeginDragging(collectionView)
         selectedItem = indexPath.item
@@ -132,7 +139,7 @@ public class SnapLikeDataSource<Cell: UICollectionViewCell>: NSObject, UICollect
         let layout = collectionView.collectionViewLayout as! SnapLikeCollectionViewFlowLayout
         let x: CGFloat = CGFloat(selectedItem) * cellSize.normalWidth
         layout.ignoringBoundsChange = true
-        collectionView.setContentOffset(CGPoint(x: x, y: 0), animated: true)
+        collectionView.setContentOffset(CGPoint(x: x, y: 0), animated: enableAnimations)
         layout.ignoringBoundsChange = false
         
         perform(#selector(self.scrollViewDidEndDecelerating), with: collectionView, afterDelay: 0.3)
