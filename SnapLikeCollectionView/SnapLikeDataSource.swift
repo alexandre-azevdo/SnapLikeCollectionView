@@ -42,7 +42,7 @@ public class SnapLikeDataSource<Cell: UICollectionViewCell>: NSObject, UICollect
     
     // MARK: - Animation:
 
-    func setAnimationsEnabled(to enabled: Bool) {
+    public func setAnimationsEnabled(to enabled: Bool) {
         enableAnimations = enabled
     }
 
